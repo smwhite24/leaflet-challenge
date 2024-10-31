@@ -24,7 +24,7 @@ The USGS is dedicated to providing scientific data on natural hazards, ecosystem
 ## Getting Started
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/smwhite24/leaflet-challenge.git
 Open index.html in a web browser.
 Ensure an internet connection to fetch earthquake data from the USGS GeoJSON feed.
 
