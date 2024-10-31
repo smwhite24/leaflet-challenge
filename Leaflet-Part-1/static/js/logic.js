@@ -1,8 +1,3 @@
-
-   // Function to determine marker size based on magnitude
-function getMarkerSize(magnitude) {
-    return magnitude ? magnitude * 4 : 1; // Adjust size multiplier as needed
-}
 // Function to determine marker size based on magnitude
 function getMarkerSize(magnitude) {
     return magnitude ? magnitude * 4 : 1; // Adjust size multiplier as needed
@@ -10,20 +5,13 @@ function getMarkerSize(magnitude) {
 
 // Function to determine color based on depth
 function getColor(depth) {
-    const thresholds = [
-        { limit: 90, color: '#ff0000' }, // Deep
-        { limit: 70, color: '#ff0000' }, // Deep
-        { limit: 50, color: '#ffbf00' }, // Moderate
-        { limit: 30, color: '#ffbf00' }, // Moderate
-        { limit: 10, color: '#ffffb2' }, // Shallow
-    ];
-
-    for (let i = 0; i < thresholds.length; i++) {
-        if (depth > thresholds[i].limit) {
-            return thresholds[i].color;
-        }
+    if (depth <= 30) {
+        return '#ffffb2'; // Shallow (light yellow)
+    } else if (depth <= 70) {
+        return '#ffbf00'; // Moderate (orange)
+    } else {
+        return '#ff0000'; // Deep (red)
     }
-    return '#ff0000'; // Default color if no conditions are met
 }
 
 // Initialize the map
@@ -47,7 +35,7 @@ d3.json('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_m
             // Create a circle marker for each earthquake
             L.circleMarker([coords[1], coords[0]], {
                 radius: getMarkerSize(magnitude),
-                fillColor: getColor(depth),
+                fillColor: getColor(depth), // Use the modified getColor function
                 color: '#000',
                 weight: 1,
                 opacity: 1,
@@ -60,7 +48,7 @@ d3.json('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_m
 
         legend.onAdd = function () {
             let div = L.DomUtil.create('div', 'info legend');
-            let depths = [0, 10, 30, 50, 70, 90];
+            let depths = [0, 30, 70, 90];
             let labels = [];
 
             // Loop through depth intervals and generate a label with a colored square
